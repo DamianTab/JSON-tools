@@ -2,7 +2,7 @@ package pl.put.poznan.transformer.tools;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -12,7 +12,7 @@ public class JsonToolsFilterImpl implements JsonToolsFilter {
 
     private JsonTools jsonTools;
 
-    public JsonToolsFilterImpl(JsonTools jsonTools) {
+    public JsonToolsFilterImpl(@Qualifier("JsonTools") JsonTools jsonTools) {
         this.jsonTools = jsonTools;
     }
 

@@ -1,13 +1,11 @@
 package pl.put.poznan.transformer.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.tools.JsonTools;
-import pl.put.poznan.transformer.tools.JsonToolsFilter;
 import pl.put.poznan.transformer.tools.JsonToolsFilterImpl;
 
 import java.util.Set;
