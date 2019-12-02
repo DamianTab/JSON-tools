@@ -6,11 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Set;
 
 
 /**
- *
  * Decorator Implementation which decorate Component JsonTools.
  * This class is responsible for filtering and ignoring nodes in JSON file
  * by given input data set.
@@ -29,7 +28,7 @@ public class JsonToolsIgnorer implements JsonToolsDecorator {
     private JsonTools jsonTools;
 
     /**
-     * Class constructor, initialize jsonTools implementation.
+     * Class constructor, initializes jsonTools implementation.
      *
      * @param jsonTools specific implementation of Component.
      */
@@ -55,9 +54,9 @@ public class JsonToolsIgnorer implements JsonToolsDecorator {
      * This function modifies actual Object JSON file by filtering and ignoring
      * with entered node's values.
      *
-     * @param json JSON main node. JSON file in Object format.
+     * @param json    JSON main node. JSON file in Object format.
      * @param ignored Set of String data. Set of node's names to be ignored.
-     * @return JSON main node. JSON file with selected values.
+     * @return JSON main node. JSON file with ignored values.
      * @throws IllegalStateException Throws exception when parameters set is invalid.
      */
     @Override
