@@ -38,7 +38,9 @@ public class JsonToolsFilterImpl implements JsonToolsFilter {
     public JsonNode select(JsonNode json, Set<String> selected) {
         ObjectNode objectNode = (ObjectNode) json;
         try{
-            selected.forEach(property -> objectNode.findParent(property).retain(property));
+            selected.forEach(property -> objectNode.findParents(property).forEach(node->{
+                ((ObjectNode)node).retain(property);
+            } ));
         }catch (NullPointerException e){
             throw new IllegalStateException("The set of parameters to select is incorrect !");
         }
