@@ -2,19 +2,15 @@ package pl.put.poznan.transformer.tools;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Slf4j
-@Service
-public class JsonToolsFilterImpl implements JsonToolsFilter {
+public class JsonToolsSelector implements JsonToolsDecorator{
 
     private JsonTools jsonTools;
 
-    public JsonToolsFilterImpl(@Qualifier("JsonTools") JsonTools jsonTools) {
+    public JsonToolsSelector(@Qualifier("JsonTools") JsonTools jsonTools) {
         this.jsonTools = jsonTools;
     }
 
@@ -23,19 +19,7 @@ public class JsonToolsFilterImpl implements JsonToolsFilter {
         return jsonTools.parseJson(json);
     }
 
-    public JsonNode ignore(JsonNode json, Set<String> ignored) {
-        ObjectNode objectNode = (ObjectNode) json;
-        try {
-            ignored.forEach(property -> objectNode.findParents(property).forEach(node -> {
-                ((ObjectNode) node).without(property);
-            }));
-        } catch (NullPointerException e) {
-            throw new IllegalStateException("The set of parameters to ignore is incorrect !");
-        }
-        return objectNode;
-    }
-
-    public JsonNode select(JsonNode json, Set<String> selected) {
+    public JsonNode modify(JsonNode json, Set<String> selected) {
         ObjectNode objectNode = (ObjectNode) json;
         try {
             selected.forEach(property -> {
