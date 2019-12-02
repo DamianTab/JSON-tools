@@ -6,19 +6,53 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.*;
 
+/**
+ *
+ * Decorator Implementation which decorate Component JsonTools.
+ * This class is responsible for filtering and selecting nodes in JSON file
+ * by given input data set.
+ *
+ * @author Damian
+ * @version 1.0
+ */
 public class JsonToolsSelector implements JsonToolsDecorator{
 
+    /**
+     * Field which contains specific implementation of Component.
+     */
     private JsonTools jsonTools;
 
+    /**
+     * Class constructor, initialize jsonTools implementation.
+     *
+     * @param jsonTools specific implementation of Component
+     */
     public JsonToolsSelector(@Qualifier("JsonTools") JsonTools jsonTools) {
         this.jsonTools = jsonTools;
     }
 
+    /**
+     * Overrides implementation of interface. Assign specific Component implementation.
+     *
+     * @param json JSON file in String format
+     * @return JsonNode JSON main node. JSON file in Object format
+     */
     @Override
     public JsonNode parseJson(String json) {
         return jsonTools.parseJson(json);
     }
 
+
+    /**
+     * Overrides modify function of JsonToolsDecorator.
+     * This function modifies actual Object JSON file by filtering and selecting
+     * with entered node's values.
+     *
+     * @param json JSON main node. JSON file in Object format.
+     * @param selected Set of String data. Set of node's names to be selected.
+     * @return JSON main node. JSON file with selected values.
+     * @throws IllegalStateException Throws exception when parameters set is invalid.
+     */
     public JsonNode modify(JsonNode json, Set<String> selected) {
         ObjectNode objectNode = (ObjectNode) json;
         try {
