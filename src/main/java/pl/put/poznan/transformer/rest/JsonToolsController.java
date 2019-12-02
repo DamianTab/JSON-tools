@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.tools.JsonTools;
-import pl.put.poznan.transformer.tools.JsonToolsFilterImpl;
+import pl.put.poznan.transformer.tools.JsonToolsIgnorer;
+import pl.put.poznan.transformer.tools.JsonToolsSelector;
 
 import java.util.Set;
 
@@ -15,13 +16,11 @@ import java.util.Set;
 @RequestMapping
 public class JsonToolsController {
 
-    private final JsonToolsFilterImpl jsonFilterTools;
     private final JsonTools jsonTools;
 
     @Autowired
     public JsonToolsController(@Qualifier("JsonTools") JsonTools jsonTools) {
         this.jsonTools = jsonTools;
-        jsonFilterTools = new JsonToolsFilterImpl(jsonTools);
     }
 
     @PostMapping(path = "minify", consumes = "application/json")
@@ -41,14 +40,16 @@ public class JsonToolsController {
     public JsonNode ignore(@RequestBody String json, @RequestParam Set<String> ignored) {
         log.debug("ignore called with params: JSON: {}, ignoreSet: {}", json, ignored);
         JsonNode jsonNode = jsonTools.parseJson(json);
-        return jsonFilterTools.ignore(jsonNode, ignored);
+        JsonToolsIgnorer jsonToolsIgnorer = new JsonToolsIgnorer(jsonTools);
+        return jsonToolsIgnorer.modify(jsonNode, ignored);
     }
 
     @PostMapping(path = "select", produces = "application/json")
     public JsonNode select(@RequestBody String json, @RequestParam Set<String> selected) {
         log.debug("select called with params: JSON: {}, selected: {}", json, selected);
         JsonNode jsonNode = jsonTools.parseJson(json);
-        return jsonFilterTools.select(jsonNode, selected);
+        JsonToolsSelector jsonToolsSelector = new JsonToolsSelector(jsonTools);
+        return jsonToolsSelector.modify(jsonNode, selected);
     }
 
 }
