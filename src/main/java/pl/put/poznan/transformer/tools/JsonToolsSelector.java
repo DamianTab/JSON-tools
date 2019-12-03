@@ -41,6 +41,11 @@ public class JsonToolsSelector implements JsonToolsDecorator {
         return jsonTools.parseJson(json);
     }
 
+    @Override
+    public String getPrettyJson(String json) {
+        return jsonTools.getPrettyJson(json);
+    }
+
 
     /**
      * Overrides modify function of JsonToolsDecorator.

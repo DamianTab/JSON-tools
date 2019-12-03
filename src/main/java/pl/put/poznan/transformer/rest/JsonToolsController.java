@@ -31,9 +31,10 @@ public class JsonToolsController {
     }
 
     @PostMapping(path = "deminify", produces = "application/json")
-    public JsonNode deminify(@RequestBody String json) {
+    public String deminify(@RequestBody String json) {
         log.debug("deminify called with params: JSON: {}", json);
-        return jsonTools.parseJson(json);
+        log.info("asd {}", jsonTools.getPrettyJson(json));
+        return jsonTools.getPrettyJson(json);
     }
 
     @PostMapping(path = "ignore", produces = "application/json")
