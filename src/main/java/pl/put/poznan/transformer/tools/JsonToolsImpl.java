@@ -1,5 +1,6 @@
 package pl.put.poznan.transformer.tools;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,10 +54,21 @@ public class JsonToolsImpl implements JsonTools {
     @Override
     public JsonNode parseJson(String json) {
         try {
-            return mapper.readTree(json);
+            JsonNode jsonNode = mapper.readTree(json);
+            return jsonNode;
         } catch (IOException e) {
             log.error("Error processing json: {}", json);
             throw new IllegalStateException("Invalid JSON format");
         }
+    }
+
+    @Override
+    public String getPrettyJson(String json) {
+        try {
+            Object jsonObject = mapper.readValue(json, Object.class);
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonObject);
+        } catch (IOException e) {
+            log.error("Error processing json: {}", json);
+            throw new IllegalStateException("Invalid JSON format");        }
     }
 }
