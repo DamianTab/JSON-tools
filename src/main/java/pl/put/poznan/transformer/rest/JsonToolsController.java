@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.tools.JsonTools;
+import pl.put.poznan.transformer.tools.JsonToolsBase64;
 import pl.put.poznan.transformer.tools.JsonToolsIgnorer;
 import pl.put.poznan.transformer.tools.JsonToolsSelector;
 
@@ -51,6 +52,13 @@ public class JsonToolsController {
         JsonNode jsonNode = jsonTools.parseJson(json);
         JsonToolsSelector jsonToolsSelector = new JsonToolsSelector(jsonTools);
         return jsonToolsSelector.modify(jsonNode, selected);
+    }
+
+    @PostMapping(path = "json2base64", produces = "text/plain")
+    public String json2base64(@RequestBody String json) {
+        log.debug("json2base64 called with params: JSON: {}", jsonTools.parseJson(json).toString());
+        JsonToolsBase64 jsonToolsBase64 = new JsonToolsBase64(jsonTools);
+        return jsonToolsBase64.toBase64(jsonTools.parseJson(json));
     }
 
 }
