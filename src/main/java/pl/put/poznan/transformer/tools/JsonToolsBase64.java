@@ -1,10 +1,12 @@
 package pl.put.poznan.transformer.tools;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Base64;
 
 
@@ -63,5 +65,27 @@ public class JsonToolsBase64 implements JsonToolsBase64Decorator {
     @Override
     public String toBase64(JsonNode json) {
         return Base64.getEncoder().encodeToString(json.toString().getBytes());
+    }
+
+    /**
+     * Overrides modify function of JsonToolsBase64Decorator.
+     * This function encodes a JSON string in Base64 encoding.
+     *
+     * @param base64    Base64 encoded string.
+     * @return JsonNode JSON object.
+     * @throws IllegalStateException Throws exception when resulting JSON is invalid.
+     */
+    @Override
+    public JsonNode toJson(String base64) {
+        ObjectMapper mapper = new ObjectMapper();
+        byte[] bytes = Base64.getDecoder().decode(base64.getBytes());
+
+        try{
+            return mapper.readTree(bytes);
+        }
+        catch (IOException e){
+            log.error("Error processing base64 string: {}", base64);
+            throw new IllegalStateException("Invalid JSON output");
+        }
     }
 }

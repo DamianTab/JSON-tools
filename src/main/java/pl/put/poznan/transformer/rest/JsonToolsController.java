@@ -61,6 +61,12 @@ public class JsonToolsController {
         return jsonToolsBase64.toBase64(jsonTools.parseJson(json));
     }
 
+    @PostMapping(path = "base642json", produces = "application/json")
+    public JsonNode base642json(@RequestBody String base64) {
+        log.debug("base642json called with params: Base64: {}", base64);
+        JsonToolsBase64 jsonToolsBase64 = new JsonToolsBase64(jsonTools);
+        return jsonToolsBase64.toJson(base64);
+    }
 }
 
 
