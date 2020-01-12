@@ -12,10 +12,9 @@ import java.util.Base64;
 
 /**
  * Decorator Implementation which decorate Component JsonTools.
- * This class is responsible for filtering and ignoring nodes in JSON file
- * by given input data set.
+ * This class is responsible for decoding and encoding JSON strings as Base64.
  *
- * @author Damian, Krzysztof
+ * @author Michał
  * @version 1.0
  */
 
