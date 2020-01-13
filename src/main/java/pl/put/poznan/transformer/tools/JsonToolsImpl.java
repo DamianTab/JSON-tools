@@ -1,6 +1,5 @@
 package pl.put.poznan.transformer.tools;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,8 +38,8 @@ public class JsonToolsImpl implements JsonTools {
     public JsonToolsImpl(ObjectMapper mapper) {
         this.mapper = mapper;
         mapper.enable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES,
-                DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY,
-                DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
+                      DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY,
+                      DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
     }
 
     /**
@@ -69,6 +68,7 @@ public class JsonToolsImpl implements JsonTools {
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonObject);
         } catch (IOException e) {
             log.error("Error processing json: {}", json);
-            throw new IllegalStateException("Invalid JSON format");        }
+            throw new IllegalStateException("Invalid JSON format");
+        }
     }
 }
