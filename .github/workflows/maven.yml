@@ -18,4 +18,4 @@ jobs:
     - name: Test with Maven
       run: mvn -B test --file pom.xml
     - name: Deploy with Maven
-      run: mvn deploy -Dregistry=https://maven.pkg.github.com/DamianTab -Dtoken=GH_TOKEN
+      run: mvn deploy
